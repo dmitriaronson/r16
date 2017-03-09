@@ -7,16 +7,49 @@
 }
 
 .seq li {
-  width: 36px;
-  height: 26px;
-  border: 3px #2b2b2b;
+  width: 48px;
+  height: 36px;
+  margin: 0 2px;
+}
+
+.seq li:nth-child(4n+1) {
+  background: red;
+}
+
+.seq li a {
+  display: block;
+  width: 100%;
   background: #363636;
 }
 
-.seq li.active {
+.seq li a:first-child {
+  margin-bottom: 1px;
+}
+
+.seq li a.edit {
+  background: #363636;
+  height: 80%;
+}
+
+.seq li a.switch {
+  background: #363636;
+  height: 20%;
+}
+
+.seq li.on a.switch {
+  background: #cbcb65;
+  /*background: #20c08a;*/
+}
+
+.seq li.active a.edit {
   background: #20c08a;
 }
 
-.seq li .options {
+.seq li.current a.switch {
+  /*background: #cbcb65;*/
+  background: #20c08a;
+}
+
+.seq li.options {
   display: none;
 }

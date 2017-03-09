@@ -1,10 +1,6 @@
 <ul class="seq">
-  <li *ngFor="let step of pattern" [ngClass]="{active: step.on}" (click)="step.on = !step.on">
-    <div class="options">
-      <select [(ngModel)]="step.sample">
-        <option value="null">Null</option>
-        <option *ngFor="let sample of sampleDir" [value]="sample">{{sample}}</option>
-      </select>
-    </div>
+  <li *ngFor="let step of pattern; let i = index" [ngClass]="{on: step.on, active: isActiveStep(step.channel, i), current: currentBar === i}">
+    <a href="#" class="edit" (click)="selectStep(step)"></a>
+    <a href="#" class="switch" (click)="step.on = !step.on"></a>
   </li>
 </ul>

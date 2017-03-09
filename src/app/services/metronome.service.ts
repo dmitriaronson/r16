@@ -20,7 +20,7 @@ export class MetronomeService {
   constructor(
     private audioContextService: AudioContextService,
   ) {
-    this.timerWorker = new Worker('assets/metronome-worker.js');
+    this.timerWorker = new Worker('workers/metronome-worker.js');
     this.timerWorker.onmessage = (e) => {
       if (e.data === 'tick') {
         this.scheduler();

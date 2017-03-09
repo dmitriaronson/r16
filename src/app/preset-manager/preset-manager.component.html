@@ -1,0 +1,11 @@
+<div>
+  <select [(ngModel)]="currentPreset" (change)="onPresetSelect()">
+    <option *ngFor="let preset of presets" [value]="preset">{{preset}}</option>
+  </select>
+
+  <div>
+    <input type="text">
+  </div>
+
+  <a href="" (click)="savePreset()">Save</a>
+</div>

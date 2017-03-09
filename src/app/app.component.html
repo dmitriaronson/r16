@@ -1,8 +1,18 @@
-<section class="module">
-  <ul *ngFor="let seq of channels">
-    <app-seq [pattern]="seq"></app-seq>
-  </ul>
+<header class="module">
+  <h1>Random 16</h1>
 
+  <a href="#" (click)="addChannel()">Add channel</a>
+  <a href="#" (click)="reset()">Reset</a>
+
+  <app-preset-manager [presets]="presetsList" (onChange)="changePreset($event)"></app-preset-manager>
+</header>
+
+<section class="module">
+  <ul *ngFor="let seq of channels; let i = index">
+    <app-seq [pattern]="seq" [activeStep]="activeStep" [currentBar]="currentBar" (onSelect)="setActiveStep($event, i)"></app-seq>
+  </ul>
 </section>
 
-<a href="#" (click)="addChannel()">Add channel</a>
+<section class="module">
+  <app-step-options [step]="activeStep"></app-step-options>
+</section>
