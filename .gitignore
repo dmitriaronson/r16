@@ -40,4 +40,4 @@ testem.log
 Thumbs.db
 
 #Project
-src/samples
+src/samples/*.wav
