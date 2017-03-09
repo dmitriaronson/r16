@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AudioContextService } from './audio-context.service';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class MetronomeService {
@@ -13,6 +14,8 @@ export class MetronomeService {
   private isPlaying = false;
   private scheduleAheadTime = 0.1;
   private ctx: AudioContext = this.audioContextService.get();
+
+  public emitter = new Subject();
 
   constructor(
     private audioContextService: AudioContextService,
@@ -30,9 +33,9 @@ export class MetronomeService {
 
   nextNote() {
     const secondsPerBeat = 60.0 / this.tempo;
-    const nextNoteTime = this.nextNoteTime + 0.25 * secondsPerBeat;
+    this.nextNoteTime = this.nextNoteTime + 0.25 * secondsPerBeat;
 
-    this.current16thNote = + 1;
+    this.current16thNote = this.current16thNote + 1;
 
     if (this.current16thNote === 16) {
       this.current16thNote = 0;
@@ -42,20 +45,19 @@ export class MetronomeService {
   scheduleNote(beatNumber, time) {
     this.notesInQueue.push( { note: beatNumber, time: time } );
 
-    if (this.noteResolution === 1 && (beatNumber % 2)) {
-          return;
-    }
-
-    if (this.noteResolution === 2 && (beatNumber % 4)) {
+    if ((this.noteResolution === 1) && (beatNumber % 2)) {
       return;
     }
-    console.log('pew')
-    // osc.start( time );
-    // osc.stop( time + noteLength );
+
+    if ((this.noteResolution === 2) && (beatNumber % 4)) {
+      return;
+    }
+
+    this.emitter.next({ bar: beatNumber, time, length: time + 0.05 });
   }
 
   scheduler() {
-    while (this.nextNoteTime < this.ctx.currentTime + this.scheduleAheadTime) {
+    while (this.nextNoteTime < (this.ctx.currentTime + this.scheduleAheadTime)) {
       this.scheduleNote(this.current16thNote, this.nextNoteTime);
       this.nextNote();
     }
@@ -68,11 +70,11 @@ export class MetronomeService {
       this.current16thNote = 0;
       this.nextNoteTime = this.ctx.currentTime;
       this.timerWorker.postMessage('start');
-      return 'stop';
     } else {
       this.timerWorker.postMessage('stop');
-      return 'play';
     }
+
+    return this.emitter;
   }
 
 }

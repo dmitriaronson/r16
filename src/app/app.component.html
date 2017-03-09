@@ -1,3 +1,8 @@
-<h1>
-  {{title}}
-</h1>
+<section class="module">
+  <ul *ngFor="let seq of channels">
+    <app-seq [pattern]="seq"></app-seq>
+  </ul>
+
+</section>
+
+<a href="#" (click)="addChannel()">Add channel</a>

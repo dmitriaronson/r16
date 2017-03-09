@@ -1,0 +1,22 @@
+.seq {
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+}
+
+.seq li {
+  width: 36px;
+  height: 26px;
+  border: 3px #2b2b2b;
+  background: #363636;
+}
+
+.seq li.active {
+  background: #20c08a;
+}
+
+.seq li .options {
+  display: none;
+}
