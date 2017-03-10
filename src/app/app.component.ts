@@ -3,6 +3,7 @@ import { SamplerService } from './services/sampler.service';
 import { MetronomeService } from './services/metronome.service';
 import { AudioContextService } from './services/audio-context.service';
 import { PatternService } from './services/pattern.service';
+import { RandomService } from './services/random.service';
 import { PresetManagerService } from './services/preset-manager.service';
 import sampleDir from '../samples';
 
@@ -17,11 +18,14 @@ export class AppComponent {
   public presets = this.presetManager.get();
   public presetsList = Object.keys(this.presets);
   public sampleDir = sampleDir;
+  public samples = [];
   public currentBar = 0;
   public isPlaying = false;
+  public isLoadingSamples = true;
   public gain = this.sampler.gain;
   public stepCopy;
   public activeStep;
+  public title = this.randomService.getAppTitle();
 
   constructor(
     private audioContextService: AudioContextService,
@@ -29,31 +33,41 @@ export class AppComponent {
     private patternService: PatternService,
     private metronome: MetronomeService,
     private presetManager: PresetManagerService,
+    private randomService: RandomService,
     private changeDetector: ChangeDetectorRef
   ) {
     this.channels = this.presets.empty;
     this.activeStep = this.channels[0][0];
 
-    sampler.load().subscribe(() => {
-      this.metronome.emitter.subscribe(({ time, length, bar }) => {
-        this.currentBar = bar;
+    this.sampler.load();
+
+    this.sampler.loader.subscribe(sampleName => {
+      this.samples.push(sampleName);
+
+      if (this.samples.length === sampleDir.length) {
+        this.isLoadingSamples = false;
         this.changeDetector.detectChanges();
+      }
+    });
 
-        this.channels.forEach(channel => {
-          const sample = channel[bar];
+    this.metronome.emitter.subscribe(({ time, length, bar }) => {
+      this.currentBar = bar;
+      this.changeDetector.detectChanges();
 
-          if (sample.on) {
-            if (sample.pool.length === 1) {
-              this.sampler.play(sample.pool[0]);
+      this.channels.forEach(channel => {
+        const sample = channel[bar];
+
+        if (sample.on) {
+          if (sample.pool.length === 1) {
+            this.sampler.play(sample.pool[0]);
+          } else {
+            if (sample.pool.length === 0) {
+              this.sampler.play(sampleDir[this.getRandomSample(sampleDir.length)]);
             } else {
-              if (sample.pool.length === 0) {
-                this.sampler.play(sampleDir[this.getRandomSample(sampleDir.length)]);
-              } else {
-                this.sampler.play(sample.pool[this.getRandomSample(sample.pool.length)]);
-              }
+              this.sampler.play(sample.pool[this.getRandomSample(sample.pool.length)]);
             }
           }
-        });
+        }
       });
     });
   }
@@ -77,7 +91,6 @@ export class AppComponent {
 
   @HostListener('window:keydown', ['$event'])
   keyboardInput(event: KeyboardEvent) {
-    console.log(event.keyCode);
     if (event.keyCode === 32) {
       this.play();
     }

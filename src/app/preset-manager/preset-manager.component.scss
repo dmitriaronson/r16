@@ -1,7 +1,29 @@
 .preset-manager {
   .select {
     display: inline-block;
+    position: relative;
+
+    select {
+      padding-right: 14px;
+      position: relative;
+      z-index: 2;
+    }
+
+    &:after {
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      content: "\F0D7";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+    }
   }
+
 
   input {
     background: transparent;

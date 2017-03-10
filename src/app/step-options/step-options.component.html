@@ -1,15 +1,20 @@
 <div class="sample-select">
-  <div>
-    <h3>Samples</h3>
+  <div class="col">
+    <header>
+      <h3>Samples</h3>
+      <div class="small spinner" *ngIf="isLoading"></div>
+    </header>
     <ul class="samples">
-      <li *ngFor="let sample of sampleDir" (click)="addToPool(sample)">
+      <li *ngFor="let sample of samples" (click)="addToPool(sample)">
         {{sample}}
       </li>
     </ul>
   </div>
 
-  <div>
-    <h3>Step pool</h3>
+  <div class="col">
+    <header>
+      <h3>Step pool</h3>
+    </header>
     <ul class="selected">
       <li *ngFor="let sample of step.pool" (click)="removeFromPool(sample)">
         {{sample}}

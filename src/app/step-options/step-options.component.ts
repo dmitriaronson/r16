@@ -9,6 +9,8 @@ import sampleDir from '../../samples';
 export class StepOptionsComponent {
   private sampleDir = sampleDir;
   @Input() step;
+  @Input() samples;
+  @Input() isLoading;
 
   constructor() {}
 

@@ -4,17 +4,16 @@
 
   h3 {
     margin: 0;
-    padding: 6px 2px;
   }
 }
 
-.sample-select div {
+.sample-select .col {
   width: 50%;
   float: left;
 }
 
 .sample-select ul {
-  max-height: 250px;
+  height: 250px;
   overflow: scroll;
   padding: 2px;
 }
@@ -26,4 +25,13 @@
 
 .sample-select li:hover {
   background: #282828;
+}
+
+.sample-select header {
+  display: flex;
+  padding: 6px;
+
+  h3 {
+    flex: 1;
+  }
 }

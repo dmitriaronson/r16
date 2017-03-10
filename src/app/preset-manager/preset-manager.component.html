@@ -3,7 +3,6 @@
     <select [(ngModel)]="currentPreset" (change)="onPresetSelect()">
       <option *ngFor="let preset of presets" [value]="preset">{{preset}}</option>
     </select>
-    <i class="fa fa-caret-down" aria-hidden="true"></i>
   </div>
 
   <input *ngIf="isAddingNewPreset" type="text" [(ngModel)]="presetName">
