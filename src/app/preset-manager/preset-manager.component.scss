@@ -1,0 +1,14 @@
+.preset-manager {
+  .select {
+    display: inline-block;
+  }
+
+  input {
+    background: transparent;
+    outline: none;
+    border: 0;
+    color: #797979;
+    font-family: 'Roboto', sans-serif;
+    border-bottom: 1px dotted;
+  }
+}

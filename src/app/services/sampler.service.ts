@@ -13,11 +13,15 @@ import 'rxjs/add/observable/forkJoin';
 export class SamplerService {
   public bank = {};
   private ctx: AudioContext = this.audioContextService.get();
+  private gainNode = this.ctx.createGain();
 
   constructor(
     private audioContextService: AudioContextService,
     private http: Http
-  ) {}
+  ) {
+    this.gainNode.gain.value = 0.1;
+    this.gainNode.connect(this.ctx.destination);
+  }
 
   loadSample(filename: string) {
     const params = { responseType: ResponseContentType.ArrayBuffer };
@@ -35,9 +39,10 @@ export class SamplerService {
   play(filename: string) {
     const buffer = this.bank[filename];
     const source = this.ctx.createBufferSource();
+
     source.buffer = buffer;
 
-    source.connect(this.ctx.destination);
+    source.connect(this.gainNode);
     source.start(0);
   }
 

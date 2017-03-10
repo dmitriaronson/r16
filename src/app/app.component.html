@@ -1,15 +1,29 @@
-<header class="module">
-  <h1>Random 16</h1>
-
-  <a href="#" (click)="addChannel()">Add channel</a>
-  <a href="#" (click)="reset()">Reset</a>
-
-  <app-preset-manager [presets]="presetsList" (onChange)="changePreset($event)"></app-preset-manager>
+<header class="module primary-header">
+  <h1>R16</h1>
 </header>
+
+<section class="module secondary-module pattern-manager">
+  <div>
+    <a href="#" class="btn" (click)="addChannel()">Add channel</a>
+    <a href="#" class="btn" (click)="reset()"><i class="fa fa-recycle" aria-hidden="true"></i></a>
+  </div>
+
+  <app-preset-manager
+    [presets]="presetsList"
+    (onAdd)="addPreset($event)"
+    (onSave)="savePreset($event)"
+    (onChange)="changePreset($event)">
+  </app-preset-manager>
+</section>
 
 <section class="module">
   <ul *ngFor="let seq of channels; let i = index">
-    <app-seq [pattern]="seq" [activeStep]="activeStep" [currentBar]="currentBar" (onSelect)="setActiveStep($event, i)"></app-seq>
+    <app-seq
+      [pattern]="seq"
+      [activeStep]="activeStep"
+      [currentBar]="currentBar"
+      (onSelect)="setActiveStep($event, i)">
+    </app-seq>
   </ul>
 </section>
 

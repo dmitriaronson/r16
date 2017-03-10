@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-seq',
   templateUrl: './seq.component.html',
-  styleUrls: ['./seq.component.css']
+  styleUrls: ['./seq.component.scss']
 })
 export class SeqComponent {
   @Input() pattern;

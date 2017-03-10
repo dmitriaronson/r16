@@ -1,11 +1,16 @@
-<div>
-  <select [(ngModel)]="currentPreset" (change)="onPresetSelect()">
-    <option *ngFor="let preset of presets" [value]="preset">{{preset}}</option>
-  </select>
-
-  <div>
-    <input type="text">
+<div class="preset-manager">
+  <div class="select" *ngIf="!isAddingNewPreset">
+    <select [(ngModel)]="currentPreset" (change)="onPresetSelect()">
+      <option *ngFor="let preset of presets" [value]="preset">{{preset}}</option>
+    </select>
+    <i class="fa fa-caret-down" aria-hidden="true"></i>
   </div>
 
-  <a href="" (click)="savePreset()">Save</a>
+  <input *ngIf="isAddingNewPreset" type="text" [(ngModel)]="presetName">
+
+  <a href="#" class="btn" (click)="isAddingNewPreset = !isAddingNewPreset"><i class="fa" [ngClass]="{'fa-file-o': !isAddingNewPreset, 'fa-times': isAddingNewPreset}"></i></a>
+
+  <a href="#" *ngIf="isAddingNewPreset" class="btn" (click)="addPreset()"><i class="fa fa-floppy-o"></i>
+</a>
+  <a href="#" *ngIf="!isAddingNewPreset" class="btn" (click)="savePreset()"><i class="fa fa-floppy-o"></i></a>
 </div>

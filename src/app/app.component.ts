@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { SamplerService } from './services/sampler.service';
 import { MetronomeService } from './services/metronome.service';
 import { AudioContextService } from './services/audio-context.service';
@@ -9,7 +9,8 @@ import sampleDir from '../samples';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
   public channels = [];
@@ -58,12 +59,23 @@ export class AppComponent {
     this.activeStep = step;
   }
 
-  savePreset() {
-    this.presetManager.save('test', this.channels);
+  addPreset(presetName) {
+    this.channels = [this.patternService.createSeq()];
+    this.presetManager.save(presetName, this.channels);
+    this.presets = this.presetManager.get();
+    this.presetsList = Object.keys(this.presets);
+    this.activeStep = this.channels[0][0];
+  }
+
+  savePreset(presetName) {
+    this.presetManager.save(presetName, this.channels);
+    this.presets = this.presetManager.get();
+    this.presetsList = Object.keys(this.presets);
   }
 
   changePreset(presetName) {
     this.channels = this.presets[presetName];
+    this.activeStep = this.channels[0][0];
   }
 
   addChannel() {
@@ -73,6 +85,7 @@ export class AppComponent {
 
   reset() {
     this.channels = [this.patternService.createSeq()];
+    this.activeStep = this.channels[0][0];
   }
 
   getRandomSample(max) {

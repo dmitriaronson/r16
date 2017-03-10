@@ -7,19 +7,19 @@
 }
 
 .seq li {
-  width: 48px;
+  width: 46px;
   height: 36px;
-  margin: 0 2px;
+  margin: 0 1px;
 }
 
-.seq li:nth-child(4n+1) {
-  background: red;
-}
+// .seq li:nth-child(4n+1) {
+//   background: red;
+// }
 
 .seq li a {
   display: block;
   width: 100%;
-  background: #363636;
+  background: #3e3e3e;
 }
 
 .seq li a:first-child {
@@ -27,13 +27,13 @@
 }
 
 .seq li a.edit {
-  background: #363636;
-  height: 80%;
+  background: #3e3e3e;
+  height: 20%;
 }
 
 .seq li a.switch {
-  background: #363636;
-  height: 20%;
+  background: #3e3e3e;
+  height: 80%;
 }
 
 .seq li.on a.switch {
@@ -45,9 +45,8 @@
   background: #20c08a;
 }
 
-.seq li.current a.switch {
-  /*background: #cbcb65;*/
-  background: #20c08a;
+.seq li.current {
+  opacity: .6;
 }
 
 .seq li.options {

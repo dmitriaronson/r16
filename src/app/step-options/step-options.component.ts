@@ -4,7 +4,7 @@ import sampleDir from '../../samples';
 @Component({
   selector: 'app-step-options',
   templateUrl: './step-options.component.html',
-  styleUrls: ['./step-options.component.css']
+  styleUrls: ['./step-options.component.scss']
 })
 export class StepOptionsComponent {
   private sampleDir = sampleDir;
