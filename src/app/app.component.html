@@ -2,7 +2,7 @@
   <h1>{{title}}</h1>
   <input type="range" [(ngModel)]="gain.value" step="0.1" min="0" max="1">
   <a href="#" class="btn" (click)="play()"><i class="fa" [ngClass]="{'fa-play': !isPlaying, 'fa-pause': isPlaying}"></i></a>
-  <a href="#" class="btn"><i class="fa fa-info"></i></a>
+  <a href="#" class="btn" (click)="infoModalIsOpen = true"><i class="fa fa-info"></i></a>
 </header>
 
 <section class="module secondary-module pattern-manager">
@@ -42,3 +42,13 @@
   <app-step-options [samples]="samples" [step]="activeStep" [isLoading]="isLoadingSamples"></app-step-options>
 </section>
 
+<div class="info-modal" *ngIf="infoModalIsOpen" (click)="infoModalIsOpen = false">
+  <div class="info-modal-content">
+    <div class="info-modal-header">
+      <h3>Help</h3>
+    </div>
+    <div class="info-modal-body">
+      {{this.title}} is a sample-based step-sequencer.
+    </div>
+  </div>
+</div>

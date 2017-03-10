@@ -21,6 +21,7 @@ export class AppComponent {
   public samples = [];
   public currentBar = 0;
   public isPlaying = false;
+  public infoModalIsOpen = false;
   public isLoadingSamples = true;
   public gain = this.sampler.gain;
   public stepCopy;
