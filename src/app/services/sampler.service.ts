@@ -23,7 +23,7 @@ export class SamplerService {
     private audioContextService: AudioContextService,
     private http: Http
   ) {
-    this.gain.value = 0.1;
+    this.gain.value = 0.5;
     this.gainNode.connect(this.ctx.destination);
   }
 
