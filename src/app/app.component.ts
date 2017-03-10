@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Component, ChangeDetectorRef, HostListener, ViewEncapsulation } from '@angular/core';
 import { SamplerService } from './services/sampler.service';
 import { MetronomeService } from './services/metronome.service';
 import { AudioContextService } from './services/audio-context.service';
@@ -20,6 +20,7 @@ export class AppComponent {
   public currentBar = 0;
   public isPlaying = false;
   public gain = this.sampler.gain;
+  public stepCopy;
   public activeStep;
 
   constructor(
@@ -64,6 +65,30 @@ export class AppComponent {
   play() {
     this.metronome.play();
     this.isPlaying = this.metronome.isPlaying;
+  }
+
+  copyStep() {
+    this.stepCopy = this.activeStep.pool.slice();
+  }
+
+  pasteStep() {
+    this.activeStep.pool = this.stepCopy.slice();
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  keyboardInput(event: KeyboardEvent) {
+    console.log(event.keyCode);
+    if (event.keyCode === 32) {
+      this.play();
+    }
+
+    if (event.keyCode === 67) {
+      this.copyStep();
+    }
+
+    if (event.keyCode === 86) {
+      this.pasteStep();
+    }
   }
 
   addPreset(presetName) {

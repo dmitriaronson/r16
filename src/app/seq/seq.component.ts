@@ -1,18 +1,31 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-seq',
   templateUrl: './seq.component.html',
   styleUrls: ['./seq.component.scss']
 })
-export class SeqComponent {
+export class SeqComponent implements OnInit {
   @Input() pattern;
   @Input() activeStep;
   @Input() currentBar;
   @Output() onSelect = new EventEmitter();
+  public buffer;
+
+  ngOnInit() {
+    this.buffer = this.pattern[0];
+  }
+
+  editStep(step) {
+    this.onSelect.emit(step);
+  }
 
   selectStep(step) {
-    this.onSelect.emit(step);
+    step.on = !step.on;
+
+    if (step.on) {
+      this.onSelect.emit(step);
+    }
   }
 
   isActiveStep(stepChannel, i) {

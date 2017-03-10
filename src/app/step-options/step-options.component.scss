@@ -1,13 +1,22 @@
 .sample-select {
   overflow: hidden;
   color: #747474;
+
+  h3 {
+    margin: 0;
+    padding: 6px 2px;
+  }
+}
+
+.sample-select div {
+  width: 50%;
+  float: left;
 }
 
 .sample-select ul {
-  width: 50%;
-  float: left;
   max-height: 250px;
   overflow: scroll;
+  padding: 2px;
 }
 
 .sample-select li {
@@ -16,5 +25,5 @@
 }
 
 .sample-select li:hover {
-  background: #0e0e0e;
+  background: #282828;
 }

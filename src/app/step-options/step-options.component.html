@@ -1,13 +1,19 @@
 <div class="sample-select">
-  <ul class="samples">
-    <li *ngFor="let sample of sampleDir" (click)="addToPool(sample)">
-      {{sample}}
-    </li>
-  </ul>
+  <div>
+    <h3>Samples</h3>
+    <ul class="samples">
+      <li *ngFor="let sample of sampleDir" (click)="addToPool(sample)">
+        {{sample}}
+      </li>
+    </ul>
+  </div>
 
-  <ul class="selected">
-    <li *ngFor="let sample of step.pool" (click)="removeFromPool(sample)">
-      {{sample}}
-    </li>
-  </ul>
+  <div>
+    <h3>Step pool</h3>
+    <ul class="selected">
+      <li *ngFor="let sample of step.pool" (click)="removeFromPool(sample)">
+        {{sample}}
+      </li>
+    </ul>
+  </div>
 </div>
