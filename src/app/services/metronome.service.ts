@@ -11,7 +11,7 @@ export class MetronomeService {
   private nextNoteTime = 0.0;
   private noteResolution = 0;
   private notesInQueue = [];
-  private isPlaying = false;
+  public isPlaying = false;
   private scheduleAheadTime = 0.1;
   private ctx: AudioContext = this.audioContextService.get();
 

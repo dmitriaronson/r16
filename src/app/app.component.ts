@@ -18,21 +18,23 @@ export class AppComponent {
   public presetsList = Object.keys(this.presets);
   public sampleDir = sampleDir;
   public currentBar = 0;
+  public isPlaying = false;
+  public gain = this.sampler.gain;
   public activeStep;
 
   constructor(
     private audioContextService: AudioContextService,
     private sampler: SamplerService,
     private patternService: PatternService,
-    private metronomeService: MetronomeService,
+    private metronome: MetronomeService,
     private presetManager: PresetManagerService,
     private changeDetector: ChangeDetectorRef
   ) {
     this.channels = this.presets.empty;
     this.activeStep = this.channels[0][0];
 
-    sampler.load().subscribe(val => {
-      const emitter = metronomeService.play().subscribe(({ time, length, bar }) => {
+    sampler.load().subscribe(() => {
+      this.metronome.emitter.subscribe(({ time, length, bar }) => {
         this.currentBar = bar;
         this.changeDetector.detectChanges();
 
@@ -41,12 +43,12 @@ export class AppComponent {
 
           if (sample.on) {
             if (sample.pool.length === 1) {
-              sampler.play(sample.pool[0]);
+              this.sampler.play(sample.pool[0]);
             } else {
               if (sample.pool.length === 0) {
-                sampler.play(sampleDir[this.getRandomSample(sampleDir.length)]);
+                this.sampler.play(sampleDir[this.getRandomSample(sampleDir.length)]);
               } else {
-                sampler.play(sample.pool[this.getRandomSample(sample.pool.length)]);
+                this.sampler.play(sample.pool[this.getRandomSample(sample.pool.length)]);
               }
             }
           }
@@ -57,6 +59,11 @@ export class AppComponent {
 
   setActiveStep(step) {
     this.activeStep = step;
+  }
+
+  play() {
+    this.metronome.play();
+    this.isPlaying = this.metronome.isPlaying;
   }
 
   addPreset(presetName) {

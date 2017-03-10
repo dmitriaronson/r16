@@ -14,12 +14,13 @@ export class SamplerService {
   public bank = {};
   private ctx: AudioContext = this.audioContextService.get();
   private gainNode = this.ctx.createGain();
+  public gain = this.gainNode.gain;
 
   constructor(
     private audioContextService: AudioContextService,
     private http: Http
   ) {
-    this.gainNode.gain.value = 0.1;
+    this.gain.value = 0.1;
     this.gainNode.connect(this.ctx.destination);
   }
 
