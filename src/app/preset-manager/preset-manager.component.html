@@ -7,9 +7,9 @@
 
   <input *ngIf="isAddingNewPreset" type="text" [(ngModel)]="presetName">
 
-  <a href="#" class="btn" (click)="isAddingNewPreset = !isAddingNewPreset"><i class="fa" [ngClass]="{'fa-file-o': !isAddingNewPreset, 'fa-times': isAddingNewPreset}"></i></a>
+  <a href="#" appPreventDefault class="btn" (click)="isAddingNewPreset = !isAddingNewPreset"><i class="fa" [ngClass]="{'fa-file-o': !isAddingNewPreset, 'fa-times': isAddingNewPreset}"></i></a>
 
-  <a href="#" *ngIf="isAddingNewPreset" class="btn" (click)="addPreset()"><i class="fa fa-floppy-o"></i>
+  <a href="#" appPreventDefault *ngIf="isAddingNewPreset" class="btn" (click)="addPreset()"><i class="fa fa-floppy-o"></i>
 </a>
-  <a href="#" *ngIf="!isAddingNewPreset" class="btn" (click)="savePreset()"><i class="fa fa-floppy-o"></i></a>
+  <a href="#" appPreventDefault *ngIf="!isAddingNewPreset" class="btn" (click)="savePreset()"><i class="fa fa-floppy-o"></i></a>
 </div>
