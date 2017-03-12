@@ -41,6 +41,8 @@ export class SamplerService {
         }, err => console.log(err));
       });
     });
+
+    return this.loader;
   }
 
   play(filename: string) {
