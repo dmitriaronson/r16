@@ -43,13 +43,4 @@
   <app-step-options [samples]="samples" [step]="activeStep" [isLoading]="isLoadingSamples"></app-step-options>
 </section>
 
-<div class="info-modal" *ngIf="infoModalIsOpen" (click)="infoModalIsOpen = false">
-  <div class="info-modal-content">
-    <div class="info-modal-header">
-      <h3>Help</h3>
-    </div>
-    <div class="info-modal-body">
-      {{this.title}} is a sample-based step-sequencer.
-    </div>
-  </div>
-</div>
+<app-info [title]="title" [isOpen]="infoModalIsOpen" (close)="closeInfo()"></app-info>

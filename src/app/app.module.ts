@@ -15,6 +15,7 @@ import { SeqComponent } from './seq/seq.component';
 import { StepOptionsComponent } from './step-options/step-options.component';
 import { PresetManagerComponent } from './preset-manager/preset-manager.component';
 import { PreventDefaultDirective } from './directives/prevent-default.directive';
+import { InfoComponent } from './info/info.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PreventDefaultDirective } from './directives/prevent-default.directive'
     SeqComponent,
     StepOptionsComponent,
     PresetManagerComponent,
-    PreventDefaultDirective
+    PreventDefaultDirective,
+    InfoComponent
   ],
   imports: [
     BrowserModule,

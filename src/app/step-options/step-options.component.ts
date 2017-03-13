@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import sampleDir from '../../samples';
 
 @Component({
@@ -12,10 +12,13 @@ export class StepOptionsComponent {
   @Input() samples;
   @Input() isLoading;
 
-  constructor() {}
+  constructor(
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   addToPool(sample) {
     this.step.pool = this.step.pool.concat([sample]);
+    this.changeDetector.detectChanges();
   }
 
   removeFromPool(sample) {

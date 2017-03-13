@@ -39,9 +39,12 @@ export class AppComponent {
     private randomService: RandomService,
     private changeDetector: ChangeDetectorRef
   ) {
-    const path = window.location.pathname.substr(1);
-    this.channels = this.presets.empty;
-    this.activeStep = this.channels[0][0];
+    this.activeStep = { channel: null, id: null };
+
+    this.api.get(this.presets.empty).subscribe(channels => {
+      this.channels = channels;
+      this.activeStep = this.channels[0][0];
+    });
 
     this.sampler.load().subscribe(sampleName => {
       this.samples.push(sampleName);
@@ -51,21 +54,6 @@ export class AppComponent {
         this.changeDetector.detectChanges();
       }
     });
-
-    if (path) {
-      this.api.get(path).subscribe(channels => {
-        if (channels && channels.length) {
-          this.channels = channels;
-          this.activeStep = this.channels[0][0];
-        } else {
-          this.channels = this.presets.empty;
-          this.activeStep = this.channels[0][0];
-        }
-      });
-    } else {
-      this.channels = this.presets.empty;
-      this.activeStep = this.channels[0][0];
-    }
 
     this.metronome.emitter.subscribe(({ time, length, bar }) => {
       this.currentBar = bar;
@@ -79,11 +67,10 @@ export class AppComponent {
             if (sample.pool.length === 1) {
               this.sampler.play(sample.pool[0]);
             } else {
-              if (sample.pool.length === 0) {
-                this.sampler.play(sampleDir[this.getRandomSample(sampleDir.length)]);
-              } else {
-                this.sampler.play(sample.pool[this.getRandomSample(sample.pool.length)]);
-              }
+              const pool = sample.pool.length === 0 ? sampleDir : sample.pool;
+              const randomSample = pool[this.getRandomSample(pool.length)];
+
+              this.sampler.play(randomSample);
             }
           }
         });
@@ -112,6 +99,10 @@ export class AppComponent {
 
   pasteStep() {
     this.activeStep.pool = this.stepCopy.slice();
+  }
+
+  closeInfo() {
+    this.infoModalIsOpen = false;
   }
 
   @HostListener('window:keydown', ['$event'])

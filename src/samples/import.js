@@ -1,14 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 const slug = require('slug');
-const filenames = fs.readdirSync('src/samples').filter(f => f.includes('.wav'));
+const filenames = fs.readdirSync('src/samples').filter(f => f.includes('.ogg'));
 
 console.log(`Found ${filenames.length} samples`);
 
 const content = `
   export default [${filenames.map((filename, i) => {
-    const name = filename.replace('.wav', '');
-    const slugName = `${slug(name.trim().toLowerCase())}.wav`;
+    const name = filename.replace('.ogg', '');
+    const slugName = `${slug(name.trim().toLowerCase())}.ogg`;
 
     fs.renameSync(`./src/samples/${filename}`, `./src/samples/${slugName}`);
 

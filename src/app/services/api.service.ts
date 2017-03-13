@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import * as Rx from 'rxjs/rx';
+
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -16,8 +18,9 @@ export class ApiService {
     private http: Http,
   ) {}
 
-  get(id) {
-    return this.request('GET', id);
+  get(defaultPattern) {
+    const id = window.location.pathname.substr(1);
+    return Observable.if(() => id.length !== 0, this.request('GET', id), Rx.Observable.of(defaultPattern));
   }
 
   post(body) {
