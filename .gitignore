@@ -41,4 +41,5 @@ Thumbs.db
 
 #Project
 src/samples/*.wav
+src/samples/*.ogg
 src/samples/index.ts
