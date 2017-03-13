@@ -8,9 +8,11 @@
       "root": "src",
       "outDir": "dist",
       "assets": [
-  "assets",
-  "favicon.ico"
-],
+        "assets",
+        "samples",
+        "workers",
+        "favicon.ico"
+      ],
       "index": "index.html",
       "main": "main.ts",
       "test": "test.ts",
