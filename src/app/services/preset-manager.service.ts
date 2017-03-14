@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PatternService } from './pattern.service';
+import defaultPresets from '../presets';
 
 @Injectable()
 export class PresetManagerService {
@@ -12,9 +13,8 @@ export class PresetManagerService {
   ) {
     const storageData = this.storage.getItem(this.storageKey) || '{}';
     const userPresets = JSON.parse(storageData);
-    const emptyPreset = [patternService.createSeq()];
 
-    this.presets = Object.assign({ empty: emptyPreset }, userPresets);
+    this.presets = Object.assign(defaultPresets, userPresets);
   }
 
   get() {
