@@ -26,4 +26,21 @@
     border: 2px solid;
     margin-top: 2em;
   }
+
+  ul {
+    margin-bottom: 1em;
+    margin-left: .5em;
+
+    li {
+      margin-bottom: .5em;
+    }
+
+    em {
+      background: #797979;
+      color: #fff;
+      border-radius: 2px;
+      font-style: normal;
+      padding: 2px;
+    }
+  }
 }
