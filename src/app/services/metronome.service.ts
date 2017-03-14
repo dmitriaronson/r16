@@ -7,10 +7,10 @@ export class MetronomeService {
   private timerWorker;
   private current16thNote;
   private lookahead = 25.0;
-  private tempo = 120.0;
   private nextNoteTime = 0.0;
   private noteResolution = 0;
   private notesInQueue = [];
+  public tempo = 120;
   public isPlaying = false;
   private scheduleAheadTime = 0.1;
   private ctx: AudioContext = this.audioContextService.get();

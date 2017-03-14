@@ -145,6 +145,15 @@ export class AppComponent {
     this.channels.push(pattern);
   }
 
+  onTempoChange(e) {
+    const value = e.target.value;
+    const regex = /^\d+$/;
+
+    if (regex.test(value)) {
+      this.metronome.tempo = e.target.value;
+    }
+  }
+
   reset() {
     this.channels = [this.patternService.createSeq()];
     this.activeStep = this.channels[0][0];

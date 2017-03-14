@@ -12,7 +12,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class ApiService {
   private token: string;
-  private url = 'http://localhost:4200/pattern';
+  private url = '/pattern';
 
   constructor(
     private http: Http,

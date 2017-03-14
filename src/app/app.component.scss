@@ -83,3 +83,24 @@ h1 {
     }
   }
 }
+
+.bpm {
+  max-width: 37px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 2px;
+  height: 28px;
+  margin-top: 1px;
+  background: transparent;
+  color: #e4e4e4;
+  border: 1px solid #797979;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(42, 209, 210, 0.46);
+  }
+}
+
+.bpm-label {
+  padding: 7px 0 0 7px;
+}
