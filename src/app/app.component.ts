@@ -41,7 +41,8 @@ export class AppComponent {
   ) {
     this.activeStep = { channel: null, id: null };
 
-    this.api.get(this.presets.empty).subscribe(channels => {
+    this.api.get(this.presets.empty).subscribe(({ channels, tempo }) => {
+      this.metronome.tempo = tempo;
       this.channels = channels;
       this.activeStep = this.channels[0][0];
     });
@@ -88,7 +89,9 @@ export class AppComponent {
   }
 
   save() {
-    this.api.post({ data: this.channels }).subscribe(id => {
+    const tempo = this.metronome.tempo;
+
+    this.api.post({ data: { channels: this.channels, tempo }}).subscribe(id => {
       window.location.replace(`//${window.location.host}/${id}`);
     });
   }
@@ -146,11 +149,12 @@ export class AppComponent {
   }
 
   onTempoChange(e) {
-    const value = e.target.value;
+    let value = e.target.value;
     const regex = /^\d+$/;
 
     if (regex.test(value)) {
-      this.metronome.tempo = e.target.value;
+      value = parseInt(value, 10);
+      this.metronome.tempo = value;
     }
   }
 

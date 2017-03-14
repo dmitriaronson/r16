@@ -1,5 +1,5 @@
 <header class="module primary-header">
-  <h1>{{title}} {{metronome.tempo}}</h1>
+  <h1>{{title}}</h1>
   <input type="text" class="bpm" [ngModel]="metronome.tempo" (change)="onTempoChange($event)">
   <span class="bpm-label">BPM</span>
   <input type="range" [(ngModel)]="gain.value" step="0.1" min="0" max="1">

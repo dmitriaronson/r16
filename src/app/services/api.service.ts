@@ -20,7 +20,11 @@ export class ApiService {
 
   get(defaultPattern) {
     const id = window.location.pathname.substr(1);
-    return Observable.if(() => id.length !== 0, this.request('GET', id), Rx.Observable.of(defaultPattern));
+    return Observable.if(
+      () => id.length !== 0,
+      this.request('GET', id),
+      Rx.Observable.of({ channels: defaultPattern, tempo: 120 })
+    );
   }
 
   post(body) {
