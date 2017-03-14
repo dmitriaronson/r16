@@ -90,6 +90,11 @@ export class AppComponent {
 
   save() {
     const tempo = this.metronome.tempo;
+    const isEmpty = this.channels.length === 1 && this.channels[0].every(({ on }) => !on );
+
+    if (isEmpty) {
+      return false;
+    }
 
     this.api.post({ data: { channels: this.channels, tempo }}).subscribe(id => {
       window.location.replace(`//${window.location.host}/${id}`);

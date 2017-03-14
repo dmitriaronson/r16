@@ -21,6 +21,24 @@
 .sample-select li {
   cursor: pointer;
   padding: .2em;
+  border-radius: 3px;
+
+  position: relative;
+
+  i {
+    color: #3a3a3a;
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 4px;
+    padding-right: 7px;
+  }
+
+  &:hover {
+    i {
+      display: block;
+    }
+  }
 }
 
 .sample-select li:hover {

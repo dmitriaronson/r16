@@ -187,3 +187,25 @@ input[type=range]:focus::-ms-fill-upper {
     transform: rotate(360deg);
   }
 }
+
+[ng2-tooltip] {margin: 40px; border: 1px solid #ccc}
+
+[ng2-tooltip] .tooltip-contents {
+  border: 1px solid #ccc; padding: 5px
+}
+[ng2-tooltip] .tooltip-down-arrow {
+  height: 10px;
+}
+[ng2-tooltip] .tooltip-down-arrow:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  left: 45%;
+  bottom: 5px;
+  background: #FFFFFF;
+  border-left:1px solid #ccc;
+  border-bottom:1px solid #ccc;
+  transform:rotate(-45deg);
+}

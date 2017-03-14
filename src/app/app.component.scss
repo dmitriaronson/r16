@@ -102,5 +102,19 @@ h1 {
 }
 
 .bpm-label {
-  padding: 7px 0 0 7px;
+  padding: 7px 7px 0 0px;
+}
+
+footer {
+  width: 768px;
+  margin: 1em auto;
+  overflow: hidden;
+
+  div {
+    float: right;
+
+    &:first-child {
+      float: left;
+    }
+  }
 }

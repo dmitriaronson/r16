@@ -6,7 +6,7 @@
     </header>
     <ul class="samples">
       <li *ngFor="let sample of samples" (click)="addToPool(sample)">
-        {{sample}}
+        {{sample}} <i class="fa fa-long-arrow-right"></i>
       </li>
     </ul>
   </div>
@@ -17,7 +17,7 @@
     </header>
     <ul class="selected">
       <li *ngFor="let sample of step.pool" (click)="removeFromPool(sample)">
-        {{sample}}
+        {{sample}} <i class="fa fa-remove"></i>
       </li>
     </ul>
   </div>
