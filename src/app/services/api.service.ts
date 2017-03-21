@@ -18,6 +18,10 @@ export class ApiService {
     private http: Http,
   ) {}
 
+  getPatterns() {
+    return this.request('GET', '');
+  }
+
   get(defaultPattern) {
     const id = window.location.pathname.substr(1);
     return Observable.if(

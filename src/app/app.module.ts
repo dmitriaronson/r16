@@ -12,19 +12,19 @@ import { RandomService } from './services/random.service';
 import { ApiService } from './services/api.service';
 import { PresetManagerService } from './services/preset-manager.service';
 import { SeqComponent } from './seq/seq.component';
-import { StepOptionsComponent } from './step-options/step-options.component';
 import { PresetManagerComponent } from './preset-manager/preset-manager.component';
 import { PreventDefaultDirective } from './directives/prevent-default.directive';
 import { InfoComponent } from './info/info.component';
+import { SampleManagerComponent } from './sample-manager/sample-manager.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SeqComponent,
-    StepOptionsComponent,
     PresetManagerComponent,
     PreventDefaultDirective,
-    InfoComponent
+    InfoComponent,
+    SampleManagerComponent
   ],
   imports: [
     BrowserModule,

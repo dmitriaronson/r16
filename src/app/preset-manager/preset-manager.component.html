@@ -1,15 +1,6 @@
 <div class="preset-manager">
-  <div class="select" *ngIf="!isAddingNewPreset">
-    <select [(ngModel)]="currentPreset" (change)="onPresetSelect()">
-      <option *ngFor="let preset of presets" [value]="preset">{{preset}}</option>
-    </select>
-  </div>
-
-  <input *ngIf="isAddingNewPreset" type="text" [(ngModel)]="presetName">
-
-  <a href="#" appPreventDefault class="btn" (click)="isAddingNewPreset = !isAddingNewPreset"><i class="fa" [ngClass]="{'fa-file-o': !isAddingNewPreset, 'fa-times': isAddingNewPreset}"></i></a>
-
-  <a href="#" appPreventDefault *ngIf="isAddingNewPreset" class="btn" (click)="addPreset()"><i class="fa fa-floppy-o"></i>
-</a>
-  <a href="#" appPreventDefault *ngIf="!isAddingNewPreset" class="btn" (click)="savePreset()"><i class="fa fa-floppy-o"></i></a>
+  <select [(ngModel)]="selectedPattern" (change)="onSelect()">
+    <option>Load pattern</option>
+    <option *ngFor="let pattern of patterns" [value]="pattern.id">{{pattern.id}}</option>
+  </select>
 </div>

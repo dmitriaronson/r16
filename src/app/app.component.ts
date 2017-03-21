@@ -26,7 +26,7 @@ export class AppComponent {
   public isLoadingSamples = true;
   public gain = this.sampler.gain;
   public stepCopy;
-  public activeStep;
+  public activeStep = { id: null, channel: null, pool: [] };
   public title = this.randomService.getAppTitle();
 
   constructor(
@@ -39,8 +39,6 @@ export class AppComponent {
     private randomService: RandomService,
     private changeDetector: ChangeDetectorRef
   ) {
-    this.activeStep = { channel: null, id: null };
-
     this.api.get(this.presets.empty).subscribe(({ channels, tempo }) => {
       this.metronome.tempo = tempo;
       this.channels = channels;
@@ -79,13 +77,12 @@ export class AppComponent {
     });
   }
 
-  setActiveStep(step) {
-    this.activeStep = step;
+  addToPool(sample) {
+    this.activeStep.pool = this.activeStep.pool.concat([sample]);
   }
 
-  play() {
-    this.metronome.play();
-    this.isPlaying = this.metronome.isPlaying;
+  removeFromPool(sample) {
+    this.activeStep.pool = this.activeStep.pool.filter(s => s !== sample);
   }
 
   save() {
@@ -117,7 +114,7 @@ export class AppComponent {
   keyboardInput(event: KeyboardEvent) {
     if (event.keyCode === 32) {
       event.preventDefault();
-      this.play();
+      this.metronome.play();
     }
 
     if (event.keyCode === 67) {
@@ -127,20 +124,6 @@ export class AppComponent {
     if (event.keyCode === 86) {
       this.pasteStep();
     }
-  }
-
-  addPreset(presetName) {
-    this.channels = [this.patternService.createSeq()];
-    this.presetManager.save(presetName, this.channels);
-    this.presets = this.presetManager.get();
-    this.presetsList = Object.keys(this.presets);
-    this.activeStep = this.channels[0][0];
-  }
-
-  savePreset(presetName) {
-    this.presetManager.save(presetName, this.channels);
-    this.presets = this.presetManager.get();
-    this.presetsList = Object.keys(this.presets);
   }
 
   changePreset(presetName) {

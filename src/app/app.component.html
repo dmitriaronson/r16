@@ -1,33 +1,30 @@
 <header class="module primary-header">
   <h1>{{title}}</h1>
-  <input type="range" [(ngModel)]="gain.value" step="0.1" min="0" max="1">
-  <a href="#" appPreventDefault class="btn" (click)="play()"><i class="fa" [ngClass]="{'fa-play': !isPlaying, 'fa-pause': isPlaying}"></i></a>
+  <a href="#" appPreventDefault class="btn" (click)="metronome.play()"><i class="fa" [ngClass]="{'fa-play': !isPlaying, 'fa-pause': metronome.isPlaying}"></i></a>
   <a href="#" appPreventDefault class="btn" (click)="save()"><i class="fa fa-external-link"></i></a>
 </header>
 
 <section class="module secondary-module pattern-manager">
   <div>
-    <input type="text" class="bpm" [ngModel]="metronome.tempo" (change)="onTempoChange($event)">
+    <span class="bpm-label">Volume</span>
+    <input type="range" [(ngModel)]="gain.value" step="0.1" min="0" max="1">
     <span class="bpm-label">BPM</span>
+    <input type="text" class="bpm" [ngModel]="metronome.tempo" (change)="onTempoChange($event)">
+  </div>
+
+  <div>
     <a href="#" appPreventDefault title="Add new channel" class="btn" (click)="addChannel()">Add channel</a>
     <a href="#" appPreventDefault title="Reset" class="btn" (click)="reset()"><i class="fa fa-recycle"></i></a>
   </div>
-
-  <app-preset-manager
-    [presets]="presetsList"
-    (onAdd)="addPreset($event)"
-    (onSave)="savePreset($event)"
-    (onChange)="changePreset($event)">
-  </app-preset-manager>
 </section>
 
 <section class="module">
-  <ul *ngFor="let seq of channels; let i = index">
+  <ul *ngFor="let seq of channels">
     <app-seq
       [pattern]="seq"
       [activeStep]="activeStep"
       [currentBar]="currentBar"
-      (onSelect)="setActiveStep($event, i)">
+      (onSelect)="activeStep = $event">
     </app-seq>
   </ul>
 </section>
@@ -36,15 +33,19 @@
   <div>
     Channel: <em>{{activeStep.channel}}</em>, Step: <em>{{activeStep.id}}</em>
   </div>
-  <a href="#" appPreventDefault title="Copy step" class="btn" (click)="copyStep()"><i class="fa fa-copy"></i></a>
-  <a href="#" appPreventDefault title="Paste step" class="btn" (click)="pasteStep()"><i class="fa fa-paste"></i></a>
+  <a href="#" appPreventDefault class="btn" (click)="copyStep()"><i class="fa fa-copy"></i></a>
+  <a href="#" appPreventDefault class="btn" (click)="pasteStep()"><i class="fa fa-paste"></i></a>
 </section>
 
 <section class="module no-padding">
-  <app-step-options [samples]="samples" [step]="activeStep" [isLoading]="isLoadingSamples"></app-step-options>
+  <app-sample-manager
+    [samples]="samples"
+    [pool]="activeStep.pool"
+    [isLoading]="isLoadingSamples"
+    (onAdd)="addToPool($event)"
+    (onRemove)="removeFromPool($event)"
+  ></app-sample-manager>
 </section>
-
-<app-info [title]="title" [isOpen]="infoModalIsOpen" (close)="closeInfo()"></app-info>
 
 <footer>
   <div>
@@ -56,3 +57,5 @@
     <a href="#"><i class="fa fa-facebook-square"></i> share</a>
   </div>
 </footer>
+
+<app-info [title]="title" [isOpen]="infoModalIsOpen" (close)="closeInfo()"></app-info>
