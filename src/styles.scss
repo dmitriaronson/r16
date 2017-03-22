@@ -46,9 +46,10 @@ ul {
 
 input[type=range] {
   -webkit-appearance: none;
-  margin: 10px;
+  // margin: 10px;
   width: 120px;
   background: none;
+  height: 10px;
 }
 input[type=range]:focus {
   outline: none;

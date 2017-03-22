@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, ResponseContentType } from '@angular/http';
 import { AudioContextService } from './audio-context.service';
+import { Bitcrush } from './fx.service';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import sampleDir from '../../samples';
@@ -47,6 +48,7 @@ export class SamplerService {
 
   play(filename: string) {
     const buffer = this.bank[filename];
+    const bcrush = new Bitcrush(this.ctx).create();
 
     if (!buffer) {
       return false;
@@ -56,7 +58,9 @@ export class SamplerService {
 
     source.buffer = buffer;
 
-    source.connect(this.gainNode);
+    source.connect(bcrush);
+    bcrush.connect(this.gainNode);
+
     source.start(0);
   }
 
