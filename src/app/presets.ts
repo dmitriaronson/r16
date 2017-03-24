@@ -1,6 +1,6 @@
 export default {
-  "empty": [
-    [
+  "empty": {
+    "seq": [
       {
         "channel": 0,
         "id": 0,
@@ -114,7 +114,7 @@ export default {
         'freq': ''
       }
     ]
-  ],
+  },
   'dubtekno': [
     [
       {

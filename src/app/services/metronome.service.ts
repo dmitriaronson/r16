@@ -53,7 +53,7 @@ export class MetronomeService {
       return;
     }
 
-    this.emitter.next({ bar: beatNumber, time, length: time + 0.05 });
+    this.emitter.next({ index: beatNumber, time, length: time + 0.05 });
   }
 
   scheduler() {

@@ -46,6 +46,12 @@ export class SamplerService {
     return this.loader;
   }
 
+  loadAll() {
+    const samples = sampleDir.map(filename => this.loadSample(filename).map(buffer => Observable.of(this.ctx.decodeAudioData(buffer))));
+
+    return samples;
+  }
+
   play(filename: string) {
     const buffer = this.bank[filename];
     const bcrush = new Bitcrush(this.ctx).create();

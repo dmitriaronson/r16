@@ -1,0 +1,26 @@
+<div class="sample-select">
+  <div class="col">
+    <header>
+      <h3>Samples</h3>
+      <div class="small spinner" *ngIf="isLoading"></div>
+    </header>
+
+    <ul class="samples">
+      <li *ngFor="let sample of samples" (click)="addSample(sample)">
+        {{sample}} <i class="fa fa-long-arrow-right"></i>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col">
+    <header>
+      <h3>Step pool</h3>
+    </header>
+
+    <ul class="selected">
+      <li *ngFor="let sample of step.pool; let i = index" (click)="removeSample(sample)">
+        {{sample}} <i class="fa fa-remove"></i>
+      </li>
+    </ul>
+  </div>
+</div>

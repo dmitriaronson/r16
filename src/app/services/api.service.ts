@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-
 import * as Rx from 'rxjs/rx';
+import { PatternService } from './pattern.service';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
@@ -16,18 +16,25 @@ export class ApiService {
 
   constructor(
     private http: Http,
+    private patternService: PatternService,
   ) {}
 
   getPatterns() {
     return this.request('GET', '');
   }
 
-  get(defaultPattern) {
-    const id = window.location.pathname.substr(1);
+  get(id) {
     return Observable.if(
       () => id.length !== 0,
       this.request('GET', id),
-      Rx.Observable.of({ channels: defaultPattern, tempo: 120 })
+      Rx.Observable.of({
+        tempo: 120,
+        channels: [{
+          id: 0,
+          on: true,
+          seq: this.patternService.createSeq(0),
+        }],
+      })
     );
   }
 

@@ -1,0 +1,6 @@
+<ul class="seq">
+  <li *ngFor="let step of seq; let i = index" [ngClass]="{on: step.on, active: isActiveStep(step.channel, i), current: currentBar === i }">
+    <a href="#" appPreventDefault class="switch" (click)="updateStep(step)"></a>
+    <a href="#" appPreventDefault class="edit" (click)="selectStep(step)"></a>
+  </li>
+</ul>

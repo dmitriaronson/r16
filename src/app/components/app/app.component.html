@@ -1,0 +1,53 @@
+<header class="module primary-header">
+  <h1>R16</h1>
+  <a href="#" appPreventDefault class="btn" (click)="metronome.play()"><i class="fa" [ngClass]="{'fa-play': !isPlaying, 'fa-pause': metronome.isPlaying}"></i></a>
+  <a href="#" appPreventDefault class="btn" (click)="save()"><i class="fa fa-external-link"></i></a>
+</header>
+
+<section class="module secondary-module pattern-manager">
+  <div>
+    <span class="bpm-label">Volume</span>
+    <input type="range" [(ngModel)]="gain.value" step="0.1" min="0" max="1">
+    <span class="bpm-label">BPM</span>
+    <input type="text" class="bpm" [ngModel]="metronome.tempo" (change)="onTempoChange($event)">
+  </div>
+
+  <div>
+    <a href="#" appPreventDefault title="Add new channel" class="btn" (click)="addChannel()">Add channel</a>
+    <a href="#" appPreventDefault title="Reset" class="btn" (click)="reset()"><i class="fa fa-recycle"></i></a>
+  </div>
+</section>
+
+<section class="module">
+  <ul *ngFor="let channel of channels$ | async">
+    <app-seq
+      (onSelect)="selectStep($event)"
+      (onUpdate)="updateStep($event)"
+      [seq]="channel.seq"
+      [activeStep]="activeStep$ | async"
+      [currentBar]="currentBar$ | async">
+    </app-seq>
+  </ul>
+</section>
+
+<section class="module secondary-module step-settings">
+  <div>
+    Channel: <em>{{activeStep.channel}}</em>, Step: <em>{{activeStep.id}}</em>
+  </div>
+  <a href="#" appPreventDefault class="btn" (click)="copyStep()"><i class="fa fa-copy"></i></a>
+  <a href="#" appPreventDefault class="btn" (click)="pasteStep()"><i class="fa fa-paste"></i></a>
+</section>
+
+<section class="module no-padding">
+  <app-sample-manager
+    [samples]="samples$ | async"
+    [step]="activeStep$ | async"
+    (onUpdate)="updateStep($event)"
+  ></app-sample-manager>
+</section>
+
+<footer>
+  <div>
+    version 0.0.1 | built for <i class="fa fa-chrome" aria-hidden="true"></i>
+  </div>
+</footer>
