@@ -20,6 +20,7 @@ import { RandomService } from './services/random.service';
 import { ApiService } from './services/api.service';
 import { MidiService } from './services/midi.service';
 import { PresetManagerService } from './services/preset-manager.service';
+import { UtilsService } from './services/utils.service';
 import { PatternActions } from './actions/pattern.actions';
 import { PatternEpics } from './epics/pattern.epics';
 import { SamplesActions } from './actions/samples.actions';
@@ -55,6 +56,7 @@ import { ChannelSettingsComponent } from './components/channel-settings/channel-
     RandomService,
     ApiService,
     MidiService,
+    UtilsService,
     ActiveStepActions,
     MetronomeActions,
     PatternActions,

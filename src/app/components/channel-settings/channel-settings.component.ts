@@ -14,6 +14,11 @@ export class ChannelSettingsComponent implements OnInit {
   ngOnInit() {
   }
 
+  bitCrush() {
+    this.channel.fx = [];
+    this.onUpdate.next(this.channel);
+  }
+
   muteChannel() {
     this.channel.on = !this.channel.on;
     this.onUpdate.next(this.channel);

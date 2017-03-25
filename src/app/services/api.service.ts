@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import * as Rx from 'rxjs/rx';
+
 import { PatternService } from './pattern.service';
+import { Channel } from '../models/channel.model';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
@@ -29,11 +31,7 @@ export class ApiService {
       this.request('GET', id),
       Rx.Observable.of({
         tempo: 120,
-        channels: [{
-          id: 0,
-          on: true,
-          seq: this.patternService.createSeq(0),
-        }],
+        channels: [new Channel()],
       })
     );
   }

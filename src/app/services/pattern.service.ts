@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Step } from '../models/step.model';
+import { IStep } from '../interfaces/pattern';
 
 @Injectable()
 export class PatternService {
-
-  constructor() {}
-
-  createSeq(channelId = 0) {
+  static createSeq(channelId = 0, bars = 16): IStep[] {
     const seq = [];
-    const step = { on: false, pool: [], freq: '' };
+    const step = new Step();
 
-    for (let index = 0; index < 16; index += 1) {
+    for (let index = 0; index < bars; index += 1) {
       seq.push(Object.assign({ channel: channelId, id: index }, step));
     }
 
     return seq;
   }
+
+  constructor() {}
+
 }

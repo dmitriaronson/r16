@@ -43,6 +43,7 @@ export function patternReducer(state: IPattern = INITIAL_STATE,
         id: state.channels.length,
         on: true,
         seq: action.payload,
+        fx: [],
       };
 
       const update = state.channels.concat([ newChannel ]);

@@ -46,15 +46,8 @@ export class SamplerService {
     return this.loader;
   }
 
-  loadAll() {
-    const samples = sampleDir.map(filename => this.loadSample(filename).map(buffer => Observable.of(this.ctx.decodeAudioData(buffer))));
-
-    return samples;
-  }
-
-  play(filename: string) {
+  play(filename: string, fx) {
     const buffer = this.bank[filename];
-    const bcrush = new Bitcrush(this.ctx).create();
 
     if (!buffer) {
       return false;
@@ -62,12 +55,18 @@ export class SamplerService {
 
     const source = this.ctx.createBufferSource();
 
-    source.buffer = buffer;
+    if (fx.length) {
+      const bcrush = new Bitcrush(this.ctx).create();
 
-    source.connect(bcrush);
-    bcrush.connect(this.gainNode);
+      source.buffer = buffer;
 
-    source.start(0);
+      source.connect(bcrush);
+      bcrush.connect(this.gainNode);
+      source.start(0);
+    } else {
+      source.connect(this.gainNode);
+      source.start(0);
+    }
   }
 
 }

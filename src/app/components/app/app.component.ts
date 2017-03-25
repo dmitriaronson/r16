@@ -1,38 +1,46 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, HostListener, ViewEncapsulation } from '@angular/core';
-import { bindActionCreators } from 'redux';
-import { select } from '@angular-redux/store';
+import { Component, OnInit, EventEmitter, HostListener, ViewEncapsulation } from '@angular/core';
+import { NgRedux, select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
+
 import { SamplerService } from '../../services/sampler.service';
 import { PatternService } from '../../services/pattern.service';
 import { MetronomeService } from '../../services/metronome.service';
-import { AudioContextService } from '../../services/audio-context.service';
 import { ApiService } from '../../services/api.service';
 import { MidiService } from '../../services/midi.service';
 import { PresetManagerService } from '../../services/preset-manager.service';
-import { IBar } from '../../interfaces/metronome';
-import sampleDir from '../../../samples';
-import { NgRedux } from '@angular-redux/store';
+import { UtilsService } from '../../services/utils.service';
 import { PatternActions } from '../../actions/pattern.actions';
 import { SamplesActions } from '../../actions/samples.actions';
 import { ActiveStepActions } from '../../actions/active-step.actions';
 import { MetronomeActions } from '../../actions/metronome.actions';
+import { IBar } from '../../interfaces/metronome';
+import { IChannel, IStep } from '../../interfaces/pattern';
+import { IMidiMessage } from '../../interfaces/midi';
+import sampleDir from '../../../samples';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-  public currentBar: EventEmitter<Number> = new EventEmitter();
-  private disconnect: (a?:any) => void;
-  private channels = [];
-  public gain = this.sampler.gain;
-  @select(['pattern', 'channels']) channels$: Observable<any[]>;
-  @select(['metronome', 'index']) currentBar$: Observable<any[]>;
-  @select(['sampler', 'loaded']) samples$: Observable<any[]>;
-  @select(['activeStep']) activeStep$: Observable<any[]>;
+export class AppComponent implements OnInit {
+  @select(['metronome', 'index']) currentBar$: Observable<IBar[]>;
+  @select(['sampler', 'loaded']) samples$: Observable<string[]>;
+  @select(['pattern', 'channels']) channels$: Observable<IChannel[]>;
+  @select(['activeStep']) activeStep$: Observable<IStep[]>;
+
+  private channels: IChannel[] = [];
+  private gain: AudioParam = this.sampler.gain;
+  private dispatch = this.ngRedux.dispatch;
+  private currentBar: EventEmitter<Number> = new EventEmitter();
+
+  private loadPatterns = () => this.dispatch(this.patternActions.loadPattern());
+  private loadSamples = () => this.dispatch(this.samplesActions.loadSamples());
+  private addChannel = () => this.dispatch(this.patternActions.addChannel(this.channels.length));
+  private updateStep = (step: IStep) => this.dispatch(this.patternActions.updateStep(step));
+  private updateChannel = (channel: IChannel) => this.dispatch(this.patternActions.updateChannel(channel));
+  private selectStep = (step: IStep) => this.dispatch(this.activeStep.select(step));
 
   constructor(
     private sampler: SamplerService,
@@ -43,22 +51,24 @@ export class AppComponent {
     private samplesActions: SamplesActions,
     private activeStep: ActiveStepActions,
     private patternService: PatternService,
-    private midi: MidiService
+    private midi: MidiService,
   ) {
-    const id = window.location.pathname.substr(1);
+    const id = UtilsService.getUrlId();
 
-    ngRedux.dispatch(patternActions.loadPattern());
-    ngRedux.dispatch(samplesActions.loadSamples());
+    this.loadPatterns();
+    this.loadSamples();
+
+    this.channels$
+      .do(channels => this.dispatch(activeStep.select(channels[0].seq[0])))
+      .subscribe(channels => this.channels = channels);
 
     metronome.emitter.subscribe((bar: IBar) => this.onTick(bar));
-    this.channels$
-      .do(channels => ngRedux.dispatch(activeStep.select(channels[0].seq[0])))
-      .subscribe(channels => this.channels = channels);
   }
 
-  ngOnInit() {
-    this.midi.onMessage.subscribe(({ channel, note, velocity }) => {
+  ngOnInit(): void {
+    this.midi.onMessage.subscribe(({ channel, note, velocity }: IMidiMessage) => {
       let step = this.channels[0].seq[note];
+
       if (velocity && step) {
         step = Object.assign({}, this.channels[0].seq[note]);
         step.on = !step.on;
@@ -68,11 +78,11 @@ export class AppComponent {
     });
   }
 
-  onTick(bar: IBar) {
+  private onTick(bar: IBar): void {
     this.ngRedux.dispatch(this.metronomeActions.bang(bar));
 
     if (this.channels.length) {
-      this.channels.forEach(channel => {
+      this.channels.forEach((channel: IChannel) => {
         if (!channel.on) {
           return false;
         }
@@ -81,41 +91,17 @@ export class AppComponent {
         const step = channel.seq[index];
 
         if (step.on) {
-          if (step.pool.length === 1) {
-            this.sampler.play(step.pool[0]);
-          } else {
-            const pool = step.pool.length === 0 ? sampleDir : step.pool;
-            const randomSample = pool[this.getRandomSample(pool.length)];
+          const pool = step.pool.length === 0 ? sampleDir : step.pool;
+          const sample = pool[UtilsService.pickRandom(pool.length)];
 
-            this.sampler.play(randomSample);
-          }
+          this.sampler.play(sample, channel.fx);
         }
       });
     }
   }
 
-  addChannel() {
-    this.ngRedux.dispatch(this.patternActions.addChannel(this.patternService.createSeq(this.channels.length)));
-  }
-
-  updateChannel(channel) {
-    this.ngRedux.dispatch(this.patternActions.updateChannel(channel));
-  }
-
-  updateStep(step) {
-    this.ngRedux.dispatch(this.patternActions.updateStep(step));
-  }
-
-  selectStep(step) {
-    this.ngRedux.dispatch(this.activeStep.select(step));
-  }
-
-  getRandomSample(max) {
-    return Math.floor(Math.random() * (max - 0)) + 0;
-  }
-
   @HostListener('window:keydown', ['$event'])
-  keyboardInput(event: KeyboardEvent) {
+  keyboardInput(event: KeyboardEvent): void {
     if (event.keyCode === 32) {
       event.preventDefault();
       this.metronome.play();
@@ -129,4 +115,5 @@ export class AppComponent {
     //   this.pasteStep();
     // }
   }
+
 }

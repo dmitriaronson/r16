@@ -35,7 +35,7 @@ export class PatternActions {
     return {
       type: PatternActions.STEP_UPDATED,
       payload,
-    }
+    };
   }
 
 
@@ -43,13 +43,13 @@ export class PatternActions {
     return {
       type: PatternActions.CHANNEL_ADDED,
       payload,
-    }
+    };
   }
 
   updateChannel(payload) {
     return {
       type: PatternActions.CHANNEL_UPDATED,
       payload,
-    }
+    };
   }
 }
