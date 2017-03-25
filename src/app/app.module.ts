@@ -18,6 +18,7 @@ import { MetronomeService } from './services/metronome.service';
 import { PatternService } from './services/pattern.service';
 import { RandomService } from './services/random.service';
 import { ApiService } from './services/api.service';
+import { MidiService } from './services/midi.service';
 import { PresetManagerService } from './services/preset-manager.service';
 import { PatternActions } from './actions/pattern.actions';
 import { PatternEpics } from './epics/pattern.epics';
@@ -25,6 +26,7 @@ import { SamplesActions } from './actions/samples.actions';
 import { SamplesEpics } from './epics/samples.epics';
 import { MetronomeActions } from './actions/metronome.actions';
 import { ActiveStepActions } from './actions/active-step.actions';
+import { ChannelSettingsComponent } from './components/channel-settings/channel-settings.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { ActiveStepActions } from './actions/active-step.actions';
     PreventDefaultDirective,
     InfoComponent,
     SampleManagerComponent,
-    KeysPipe
+    KeysPipe,
+    ChannelSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +54,7 @@ import { ActiveStepActions } from './actions/active-step.actions';
     PresetManagerService,
     RandomService,
     ApiService,
+    MidiService,
     ActiveStepActions,
     MetronomeActions,
     PatternActions,

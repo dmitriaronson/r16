@@ -1,5 +1,5 @@
 export interface IPattern {
-  channels: IChannel[];
+  channels?: IChannel[];
   tempo?: Number;
   loading?: Boolean;
   error?: any;

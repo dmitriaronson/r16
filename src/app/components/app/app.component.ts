@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, HostListener, ViewEncapsulation } from '@angular/core';
 import { bindActionCreators } from 'redux';
 import { select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
@@ -7,6 +7,7 @@ import { PatternService } from '../../services/pattern.service';
 import { MetronomeService } from '../../services/metronome.service';
 import { AudioContextService } from '../../services/audio-context.service';
 import { ApiService } from '../../services/api.service';
+import { MidiService } from '../../services/midi.service';
 import { PresetManagerService } from '../../services/preset-manager.service';
 import { IBar } from '../../interfaces/metronome';
 import sampleDir from '../../../samples';
@@ -41,7 +42,8 @@ export class AppComponent {
     private metronomeActions: MetronomeActions,
     private samplesActions: SamplesActions,
     private activeStep: ActiveStepActions,
-    private patternService: PatternService
+    private patternService: PatternService,
+    private midi: MidiService
   ) {
     const id = window.location.pathname.substr(1);
 
@@ -54,6 +56,18 @@ export class AppComponent {
       .subscribe(channels => this.channels = channels);
   }
 
+  ngOnInit() {
+    this.midi.onMessage.subscribe(({ channel, note, velocity }) => {
+      let step = this.channels[0].seq[note];
+      if (velocity && step) {
+        step = Object.assign({}, this.channels[0].seq[note]);
+        step.on = !step.on;
+
+        this.ngRedux.dispatch(this.patternActions.updateStep(step));
+      }
+    });
+  }
+
   onTick(bar: IBar) {
     this.ngRedux.dispatch(this.metronomeActions.bang(bar));
 
@@ -64,8 +78,8 @@ export class AppComponent {
         }
 
         const index = bar.index;
-
         const step = channel.seq[index];
+
         if (step.on) {
           if (step.pool.length === 1) {
             this.sampler.play(step.pool[0]);
@@ -82,6 +96,10 @@ export class AppComponent {
 
   addChannel() {
     this.ngRedux.dispatch(this.patternActions.addChannel(this.patternService.createSeq(this.channels.length)));
+  }
+
+  updateChannel(channel) {
+    this.ngRedux.dispatch(this.patternActions.updateChannel(channel));
   }
 
   updateStep(step) {

@@ -8,6 +8,7 @@ export class PatternActions {
   static readonly LOAD_FAILED = 'PATTERN_LOAD_FAILED';
   static readonly STEP_UPDATED = 'PATTERN_STEP_UPDATED';
   static readonly CHANNEL_ADDED = 'PATTERN_CHANNEL_ADDED';
+  static readonly CHANNEL_UPDATED = 'PATTERN_CHANNEL_UPDATED';
 
   loadPattern() {
     return {
@@ -37,9 +38,17 @@ export class PatternActions {
     }
   }
 
+
   addChannel(payload) {
     return {
       type: PatternActions.CHANNEL_ADDED,
+      payload,
+    }
+  }
+
+  updateChannel(payload) {
+    return {
+      type: PatternActions.CHANNEL_UPDATED,
       payload,
     }
   }

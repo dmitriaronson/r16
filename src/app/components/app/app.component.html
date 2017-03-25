@@ -20,6 +20,8 @@
 
 <section class="module">
   <ul *ngFor="let channel of channels$ | async">
+    <app-channel-settings (onUpdate)="updateChannel($event)" [channel]="channel"></app-channel-settings>
+
     <app-seq
       (onSelect)="selectStep($event)"
       (onUpdate)="updateStep($event)"

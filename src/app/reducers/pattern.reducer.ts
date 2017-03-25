@@ -51,16 +51,27 @@ export function patternReducer(state: IPattern = INITIAL_STATE,
         channels: update,
       };
     case PatternActions.STEP_UPDATED:
-      const step = action.payload;
+      const step: any = action['payload'];
       const channels = state.channels;
 
-      channels[step['channel']][step['id']] = step;
+      const c = channels[step['channel']];
+
+      c.seq[step.id] = step;
 
       return {
         channels: channels,
         loading: false,
         error: action.error
       };
+    case PatternActions.CHANNEL_UPDATED:
+      const updated = state.channels.slice();
+
+      updated[(<any>action.payload).id] = action.payload;
+
+      return {
+        channels: updated,
+      };
+
     default:
       return state;
   }
