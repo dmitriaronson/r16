@@ -1,5 +1,6 @@
 import { MetronomeActions } from '../actions/metronome.actions';
 import { IBar } from '../interfaces/metronome';
+import { IBarAction } from '../interfaces/actions';
 
 const INITIAL_STATE: IBar = {
   time: 0,
@@ -7,13 +8,7 @@ const INITIAL_STATE: IBar = {
   index: 0
 };
 
-interface IBarAction {
-  type: String;
-  bar: IBar;
-}
-
-export function metronomeReducer(state: IBar = INITIAL_STATE,
-  action: IBarAction): IBar {
+export function metronomeReducer(state: IBar = INITIAL_STATE, action: IBarAction): IBar {
   switch (action.type) {
     case MetronomeActions.BANG:
       return action.bar;

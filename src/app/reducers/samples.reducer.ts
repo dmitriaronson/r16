@@ -1,5 +1,5 @@
 import { SamplesActions } from '../actions/samples.actions';
-import { IPayloadAction } from '../interfaces/action';
+import { ISamplesAction } from '../interfaces/actions';
 import sampleDir from '../../samples';
 
 interface ISamplesList {
@@ -17,7 +17,7 @@ const INITIAL_STATE: ISamplesList = {
 };
 
 export function samplesReducer(state: ISamplesList = INITIAL_STATE,
-  action: IPayloadAction<String>): ISamplesList {
+  action: ISamplesAction): ISamplesList {
   switch (action.type) {
     case SamplesActions.LOAD_STARTED:
       return {
@@ -27,7 +27,7 @@ export function samplesReducer(state: ISamplesList = INITIAL_STATE,
       };
     case SamplesActions.SAMPLE_LOADED:
       return {
-        loaded: state.loaded.concat([action.payload]),
+        loaded: state.loaded.concat([action.sampleName]),
         loading: true,
         error: null,
       };

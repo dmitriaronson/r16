@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Action } from 'redux';
 
 @Injectable()
 export class PatternActions {
@@ -11,45 +10,26 @@ export class PatternActions {
   static readonly CHANNEL_UPDATED = 'PATTERN_CHANNEL_UPDATED';
 
   loadPattern() {
-    return {
-      type: PatternActions.LOAD_STARTED,
-    };
+    return { type: PatternActions.LOAD_STARTED };
   }
 
-  loadSucceeded(tempo, payload) {
-    return {
-      type: PatternActions.LOAD_SUCCEEDED,
-      tempo,
-      payload,
-    };
+  loadSucceeded(tempo, channels) {
+    return { type: PatternActions.LOAD_SUCCEEDED, tempo, channels };
   }
 
   loadFailed(error) {
-    return {
-      type: PatternActions.LOAD_FAILED,
-      error,
-    };
+    return { type: PatternActions.LOAD_FAILED, error };
   }
 
-  updateStep(payload) {
-    return {
-      type: PatternActions.STEP_UPDATED,
-      payload,
-    };
+  updateStep(step) {
+    return { type: PatternActions.STEP_UPDATED, step };
   }
 
-
-  addChannel(payload) {
-    return {
-      type: PatternActions.CHANNEL_ADDED,
-      payload,
-    };
+  addChannel(channel) {
+    return { type: PatternActions.CHANNEL_ADDED, channel };
   }
 
-  updateChannel(payload) {
-    return {
-      type: PatternActions.CHANNEL_UPDATED,
-      payload,
-    };
+  updateChannel(channel) {
+    return { type: PatternActions.CHANNEL_UPDATED, channel };
   }
 }

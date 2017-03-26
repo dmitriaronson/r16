@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PresetManagerService } from '../../services/preset-manager.service';
 import { PatternService } from '../../services/pattern.service';
-import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-preset-manager',
@@ -16,12 +15,12 @@ export class PresetManagerComponent {
 
   constructor(
     private presetManager: PresetManagerService,
-    private api: ApiService,
+    private patternService: PatternService,
   ) {
-    this.api.getPatterns().subscribe((patterns) => {
+    this.patternService.getPatterns().subscribe((patterns) => {
       this.patterns = patterns;
       this.selectedPattern = patterns[0];
-    })
+    });
   }
 
   onSelect() {

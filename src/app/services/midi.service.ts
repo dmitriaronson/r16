@@ -9,7 +9,7 @@ export class MidiService {
   }
 
   success(midi) {
-    let inputs = midi.inputs.values();
+    const inputs = midi.inputs.values();
     for (let input = inputs.next();
       input && !input.done;
       input = inputs.next()) {

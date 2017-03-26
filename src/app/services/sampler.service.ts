@@ -53,20 +53,34 @@ export class SamplerService {
       return false;
     }
 
-    const source = this.ctx.createBufferSource();
+    // const source = this.ctx.createBufferSource();
 
     if (fx.length) {
-      const bcrush = new Bitcrush(this.ctx).create();
+      // const bcrush = new Bitcrush(this.ctx).create();
 
-      source.buffer = buffer;
+      // source.buffer = buffer;
 
-      source.connect(bcrush);
-      bcrush.connect(this.gainNode);
-      source.start(0);
+      // source.connect(bcrush);
+      // bcrush.connect(this.gainNode);
+      // source.start(0);
     } else {
-      source.connect(this.gainNode);
-      source.start(0);
+      // source.connect(this.gainNode);
+      // source.start(0);
     }
+
+    // const bcrush = new Bitcrush(this.ctx).create();
+
+    // source.buffer = buffer;
+
+    // source.connect(bcrush);
+    // bcrush.connect(this.gainNode);
+    // source.start(0);
+    const source = this.ctx.createBufferSource();
+
+    source.buffer = buffer;
+
+    source.connect(this.gainNode);
+    source.start(0);
   }
 
 }

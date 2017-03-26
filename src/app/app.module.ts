@@ -5,19 +5,16 @@ import { HttpModule } from '@angular/http';
 import { NgReduxModule } from '@angular-redux/store';
 
 import { StoreModule } from './store/store.module';
-import { AppComponent } from './components/app/app.component';
+import { AppComponent } from './app.component';
 import { SeqComponent } from './components/seq/seq.component';
 import { PresetManagerComponent } from './components/preset-manager/preset-manager.component';
 import { InfoComponent } from './components/info/info.component';
 import { SampleManagerComponent } from './components/sample-manager/sample-manager.component';
-import { KeysPipe } from './pipes/keys.pipe';
 import { PreventDefaultDirective } from './directives/prevent-default.directive';
 import { AudioContextService } from './services/audio-context.service';
 import { SamplerService } from './services/sampler.service';
 import { MetronomeService } from './services/metronome.service';
 import { PatternService } from './services/pattern.service';
-import { RandomService } from './services/random.service';
-import { ApiService } from './services/api.service';
 import { MidiService } from './services/midi.service';
 import { PresetManagerService } from './services/preset-manager.service';
 import { UtilsService } from './services/utils.service';
@@ -27,6 +24,7 @@ import { SamplesActions } from './actions/samples.actions';
 import { SamplesEpics } from './epics/samples.epics';
 import { MetronomeActions } from './actions/metronome.actions';
 import { ActiveStepActions } from './actions/active-step.actions';
+import { ActiveStepEpics } from './epics/active-step.epics';
 import { ChannelSettingsComponent } from './components/channel-settings/channel-settings.component';
 
 @NgModule({
@@ -37,7 +35,6 @@ import { ChannelSettingsComponent } from './components/channel-settings/channel-
     PreventDefaultDirective,
     InfoComponent,
     SampleManagerComponent,
-    KeysPipe,
     ChannelSettingsComponent
   ],
   imports: [
@@ -53,11 +50,10 @@ import { ChannelSettingsComponent } from './components/channel-settings/channel-
     SamplerService,
     PatternService,
     PresetManagerService,
-    RandomService,
-    ApiService,
     MidiService,
     UtilsService,
     ActiveStepActions,
+    ActiveStepEpics,
     MetronomeActions,
     PatternActions,
     PatternEpics,

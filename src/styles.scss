@@ -6,6 +6,15 @@ $dark-grey: #353535;
 $light-grey: #797979;
 
 body {
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+body {
   font-family: 'Ubuntu Mono', monospace;
   font-size: 14px;
   font-weight: 400;
@@ -209,4 +218,125 @@ input[type=range]:focus::-ms-fill-upper {
   border-left:1px solid #ccc;
   border-bottom:1px solid #ccc;
   transform:rotate(-45deg);
+}
+
+$black: #282828;
+$dark-grey: #353535;
+$light-grey: #797979;
+
+.module {
+  background: $dark-grey;
+  width: 768px;
+  margin: 0 auto;
+  border: 2px solid #4c4c4c;
+  padding: 2px;
+
+  &.no-padding {
+    padding: 0;
+  }
+}
+
+.module > ul {
+  margin-bottom: 2px;
+}
+
+.module > ul:last-child {
+  margin-bottom: 0;
+}
+
+.primary-header {
+  display: flex;
+  margin-top: 2em;
+
+  h1 {
+    flex: 1;
+  }
+}
+
+.secondary-module {
+  padding: 6px;
+}
+
+h1 {
+  font-family: 'Quantico', sans-serif;
+  margin: 0;
+}
+
+
+.btn {
+  display: inline-block;
+  border:1px solid #000000;
+  color: #2AD1D2;
+  border-radius: 3px 3px 3px 3px;
+  text-decoration: none;
+  width: auto;
+  height: auto;
+  padding: 6px 12px;
+  box-shadow: inset 0 1px 0 0 #7A7A7A,inset 0 -1px 0 0 #5E5E5E,inset 0 0 0 1px #5E5E5E,0 2px 4px 0 #3b3b3b;
+  background-image: linear-gradient(to top, #353535, #3B3B3B);
+  background-color: #353535;
+  transition: all .2s;
+
+  &:hover,
+  &:active {
+    color: #21b2b3;
+    background-color: #3e3e3e;
+  }
+}
+
+.pattern-manager {
+  display: flex;
+
+  & > div:first-child {
+    flex: 1;
+  }
+}
+
+.step-settings {
+  display: flex;
+
+  & > div {
+    flex: 1;
+    padding: 7px 0;
+
+    em {
+      color: #cbcb65;
+      font-style: normal;
+    }
+  }
+}
+
+.bpm {
+  max-width: 37px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 2px;
+  height: 28px;
+  margin-top: 1px;
+  background: transparent;
+  color: #cacaca;
+  border: 1px solid #797979;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(42, 209, 210, 0.46);
+  }
+}
+
+.bpm-label {
+  padding: 7px 7px 0 0px;
+}
+
+footer {
+  width: 768px;
+  margin: 1em auto;
+  overflow: hidden;
+
+  div {
+    float: right;
+
+    &:first-child {
+      float: left;
+    }
+  }
 }

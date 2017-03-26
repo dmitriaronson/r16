@@ -2,33 +2,32 @@ import { Component, OnInit, EventEmitter, HostListener, ViewEncapsulation } from
 import { NgRedux, select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 
-import { SamplerService } from '../../services/sampler.service';
-import { PatternService } from '../../services/pattern.service';
-import { MetronomeService } from '../../services/metronome.service';
-import { ApiService } from '../../services/api.service';
-import { MidiService } from '../../services/midi.service';
-import { PresetManagerService } from '../../services/preset-manager.service';
-import { UtilsService } from '../../services/utils.service';
-import { PatternActions } from '../../actions/pattern.actions';
-import { SamplesActions } from '../../actions/samples.actions';
-import { ActiveStepActions } from '../../actions/active-step.actions';
-import { MetronomeActions } from '../../actions/metronome.actions';
-import { IBar } from '../../interfaces/metronome';
-import { IChannel, IStep } from '../../interfaces/pattern';
-import { IMidiMessage } from '../../interfaces/midi';
-import sampleDir from '../../../samples';
+import { SamplerService } from './services/sampler.service';
+import { PatternService } from './services/pattern.service';
+import { MetronomeService } from './services/metronome.service';
+import { MidiService } from './services/midi.service';
+import { PresetManagerService } from './services/preset-manager.service';
+import { UtilsService } from './services/utils.service';
+import { PatternActions } from './actions/pattern.actions';
+import { SamplesActions } from './actions/samples.actions';
+import { ActiveStepActions } from './actions/active-step.actions';
+import { MetronomeActions } from './actions/metronome.actions';
+import { IBar } from './interfaces/metronome';
+import { IChannel, IStep } from './interfaces/pattern';
+import { IMidiMessage } from './interfaces/midi';
+
+import sampleDir from '../samples';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {
   @select(['metronome', 'index']) currentBar$: Observable<IBar[]>;
   @select(['sampler', 'loaded']) samples$: Observable<string[]>;
   @select(['pattern', 'channels']) channels$: Observable<IChannel[]>;
-  @select(['activeStep']) activeStep$: Observable<IStep[]>;
+  @select(['activeStep', 'step']) activeStep$: Observable<IStep[]>;
 
   private channels: IChannel[] = [];
   private gain: AudioParam = this.sampler.gain;
@@ -38,9 +37,11 @@ export class AppComponent implements OnInit {
   private loadPatterns = () => this.dispatch(this.patternActions.loadPattern());
   private loadSamples = () => this.dispatch(this.samplesActions.loadSamples());
   private addChannel = () => this.dispatch(this.patternActions.addChannel(this.channels.length));
-  private updateStep = (step: IStep) => this.dispatch(this.patternActions.updateStep(step));
   private updateChannel = (channel: IChannel) => this.dispatch(this.patternActions.updateChannel(channel));
+  private updateStep = (step: IStep) => this.dispatch(this.patternActions.updateStep(step));
   private selectStep = (step: IStep) => this.dispatch(this.activeStep.select(step));
+  private copyStep = () => this.dispatch(this.activeStep.copy());
+  private pasteStep = () => this.dispatch(this.activeStep.paste());
 
   constructor(
     private sampler: SamplerService,
@@ -59,7 +60,7 @@ export class AppComponent implements OnInit {
     this.loadSamples();
 
     this.channels$
-      .do(channels => this.dispatch(activeStep.select(channels[0].seq[0])))
+      .do(channels => this.selectStep(channels[0].seq[0]))
       .subscribe(channels => this.channels = channels);
 
     metronome.emitter.subscribe((bar: IBar) => this.onTick(bar));
@@ -107,13 +108,13 @@ export class AppComponent implements OnInit {
       this.metronome.play();
     }
 
-    // if (event.keyCode === 67) {
-    //   this.copyStep();
-    // }
+    if (event.keyCode === 67) {
+      this.copyStep();
+    }
 
-    // if (event.keyCode === 86) {
-    //   this.pasteStep();
-    // }
+    if (event.keyCode === 86) {
+      this.pasteStep();
+    }
   }
 
 }

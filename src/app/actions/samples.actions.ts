@@ -14,24 +14,11 @@ export class SamplesActions {
     };
   }
 
-  sampleLoaded(payload: String) {
-    return {
-      type: SamplesActions.SAMPLE_LOADED,
-      payload,
-    }
+  sampleLoaded(sampleName: String) {
+    return { type: SamplesActions.SAMPLE_LOADED, sampleName };
   }
 
-  // loadSucceeded(payload: any) {
-  //   return {
-  //     type: SamplesActions.LOAD_SUCCEEDED,
-  //     payload,
-  //   };
-  // }
-
   loadFailed(error) {
-    return {
-      type: SamplesActions.LOAD_FAILED,
-      error,
-    };
+    return { type: SamplesActions.LOAD_FAILED, error };
   }
 }

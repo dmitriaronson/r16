@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Epic, createEpicMiddleware } from 'redux-observable';
+import { Observable } from 'rxjs/Observable';
 import { Action, Store } from 'redux';
-import { of } from 'rxjs/observable/of';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
 
 import { PatternActions } from '../actions/pattern.actions';
-import { ApiService } from '../services/api.service';
+import { PatternService } from '../services/pattern.service';
 
 @Injectable()
 export class PatternEpics {
   constructor(
-    private api: ApiService,
+    private patternService: PatternService,
     private actions: PatternActions,
   ) {}
 
@@ -22,9 +20,9 @@ export class PatternEpics {
   private createLoadEpic() {
     return action$ => action$
       .ofType(PatternActions.LOAD_STARTED)
-      .switchMap(a => this.api.get('')
+      .switchMap(a => this.patternService.getPattern()
         .map(({ tempo, channels }) => this.actions.loadSucceeded(tempo, channels))
-        .catch((error) => of(this.actions.loadFailed({ status: error.message }))
+        .catch((error) => Observable.of(this.actions.loadFailed({ status: error.message }))
       ));
   }
 }
