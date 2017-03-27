@@ -15,7 +15,7 @@ export class ChannelSettingsComponent implements OnInit {
   }
 
   bitCrush() {
-    this.channel.fx = [];
+    this.channel.fx = ['bitcrush'];
     this.onUpdate.next(this.channel);
   }
 

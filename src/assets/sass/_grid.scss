@@ -1,0 +1,9 @@
+.grid {
+  display: flex;
+
+  .grid-item {
+    &.wide {
+      flex: 1;
+    }
+  }
+}

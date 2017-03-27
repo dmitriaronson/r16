@@ -8,6 +8,7 @@ export class PatternActions {
   static readonly STEP_UPDATED = 'PATTERN_STEP_UPDATED';
   static readonly CHANNEL_ADDED = 'PATTERN_CHANNEL_ADDED';
   static readonly CHANNEL_UPDATED = 'PATTERN_CHANNEL_UPDATED';
+  static readonly CHANNELS_RESET = 'PATTERN_CHANNELS_RESET';
 
   loadPattern() {
     return { type: PatternActions.LOAD_STARTED };
@@ -31,5 +32,9 @@ export class PatternActions {
 
   updateChannel(channel) {
     return { type: PatternActions.CHANNEL_UPDATED, channel };
+  }
+
+  resetChannels() {
+    return { type: PatternActions.CHANNELS_RESET };
   }
 }

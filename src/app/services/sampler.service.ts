@@ -17,6 +17,7 @@ export class SamplerService {
   public bank = {};
   private ctx: AudioContext = this.audioContextService.get();
   private gainNode = this.ctx.createGain();
+  private bitCrush = new Bitcrush(this.ctx).create();
   public gain = this.gainNode.gain;
   public loader = new Subject();
 
@@ -26,6 +27,7 @@ export class SamplerService {
   ) {
     this.gain.value = 0.5;
     this.gainNode.connect(this.ctx.destination);
+    this.bitCrush.connect(this.gainNode);
   }
 
   loadSample(filename: string) {
@@ -53,33 +55,16 @@ export class SamplerService {
       return false;
     }
 
-    // const source = this.ctx.createBufferSource();
-
-    if (fx.length) {
-      // const bcrush = new Bitcrush(this.ctx).create();
-
-      // source.buffer = buffer;
-
-      // source.connect(bcrush);
-      // bcrush.connect(this.gainNode);
-      // source.start(0);
-    } else {
-      // source.connect(this.gainNode);
-      // source.start(0);
-    }
-
-    // const bcrush = new Bitcrush(this.ctx).create();
-
-    // source.buffer = buffer;
-
-    // source.connect(bcrush);
-    // bcrush.connect(this.gainNode);
-    // source.start(0);
     const source = this.ctx.createBufferSource();
 
     source.buffer = buffer;
+    console.log(fx)
+    if (fx.length) {
+      source.connect(this.bitCrush);
+    } else {
+      source.connect(this.gainNode);
+    }
 
-    source.connect(this.gainNode);
     source.start(0);
   }
 

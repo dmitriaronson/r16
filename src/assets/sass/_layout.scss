@@ -1,0 +1,47 @@
+.module {
+  background: $dark-grey;
+  width: $container-width;
+  margin: 0 auto;
+  border: 2px solid #4c4c4c;
+  padding: 2px;
+
+  &.no-padding {
+    padding: 0;
+  }
+
+  & > ul {
+    margin-bottom: 2px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.primary-header {
+  display: flex;
+  margin-top: 2em;
+
+  h1 {
+    flex: 1;
+    margin: 0;
+  }
+}
+
+.secondary-module {
+  padding: 6px;
+}
+
+footer {
+  width: $container-width;
+  margin: 1em auto;
+  overflow: hidden;
+
+  div {
+    float: right;
+
+    &:first-child {
+      float: left;
+    }
+  }
+}

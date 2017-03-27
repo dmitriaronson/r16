@@ -4,42 +4,40 @@
   overflow: hidden;
   list-style: none;
   padding: 0;
+
+  li {
+    width: 46px;
+    height: 36px;
+    margin: 0 1px;
+
+    a {
+      display: block;
+      width: 100%;
+      background: #3e3e3e;
+
+      &:first-child {
+        margin-bottom: 1px;
+      }
+
+      &.edit {
+        background: #3e3e3e;
+        height: 20%;
+      }
+
+      &.switch {
+        background: #3e3e3e;
+        height: 80%;
+      }
+    }
+
+    &.on a.switch {
+      background: #cbcb65;
+    }
+  }
 }
 
-.seq li {
-  width: 46px;
-  height: 36px;
-  margin: 0 1px;
-}
 
-// .seq li:nth-child(4n+1) {
-//   background: red;
-// }
 
-.seq li a {
-  display: block;
-  width: 100%;
-  background: #3e3e3e;
-}
-
-.seq li a:first-child {
-  margin-bottom: 1px;
-}
-
-.seq li a.edit {
-  background: #3e3e3e;
-  height: 20%;
-}
-
-.seq li a.switch {
-  background: #3e3e3e;
-  height: 80%;
-}
-
-.seq li.on a.switch {
-  background: #cbcb65;
-  /*background: #20c08a;*/
-}
 
 .seq li.active a.edit {
   background: #20c08a;

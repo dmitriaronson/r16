@@ -59,6 +59,9 @@ export function patternReducer(state: IPatternState = INITIAL_STATE, action: IPa
 
       return { channels: updated };
 
+    case PatternActions.CHANNELS_RESET:
+      return { channels: [new Channel()] };
+
     default:
       return state;
   }
