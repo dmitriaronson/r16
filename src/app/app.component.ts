@@ -39,24 +39,7 @@ export class AppComponent implements OnInit {
   private addChannel = () => this.dispatch(this.patternActions.addChannel(this.channels.length));
   private updateChannel = (channel: IChannel) => this.dispatch(this.patternActions.updateChannel(channel));
   private resetChannels = () => this.dispatch(this.patternActions.resetChannels());
-  private updateStep = (step: IStep) => {
-    const bars = 16;
-    const pads = 8;
-
-    let note = step.id + (step.channel * 8);
-
-    if (step.id > 7) {
-      note = step.id + 8;
-    }
-
-    if (step.on) {
-      this.midi.sendMessage('-1433442592', [144, note, 46]);
-    } else {
-      this.midi.sendMessage('-1433442592', [144, note, 0]);
-    }
-
-    return this.dispatch(this.patternActions.updateStep(step));
-  }
+  private updateStep = (step: IStep) => this.dispatch(this.patternActions.updateStep(step));
   private selectStep = (step: IStep) => this.dispatch(this.activeStep.select(step));
   private copyStep = () => this.dispatch(this.activeStep.copy());
   private pasteStep = () => this.dispatch(this.activeStep.paste());
