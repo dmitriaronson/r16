@@ -58,7 +58,7 @@ export class SamplerService {
     const source = this.ctx.createBufferSource();
 
     source.buffer = buffer;
-    console.log(fx)
+
     if (fx.length) {
       source.connect(this.bitCrush);
     } else {
