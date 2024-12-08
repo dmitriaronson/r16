@@ -1,7 +1,6 @@
 <header class="module primary-header">
   <h1>R16</h1>
   <a href="#" appPreventDefault class="btn" (click)="metronome.play()"><i class="fa" [ngClass]="{'fa-play': !isPlaying, 'fa-pause': metronome.isPlaying}"></i></a>
-  <a href="#" appPreventDefault class="btn" (click)="save()"><i class="fa fa-external-link"></i></a>
 </header>
 
 <section class="module secondary-module grid">
@@ -33,9 +32,7 @@
 </section>
 
 <section class="module secondary-module grid">
-  <div class="wide grid-item">
-    Channel: <em>{{activeStep$.channel | async}}</em>, Step: <em>{{activeStep$.id | async}}</em>
-  </div>
+  <div class="wide grid-item"></div>
   <a href="#" appPreventDefault class="btn" (click)="copyStep()"><i class="fa fa-copy"></i></a>
   <a href="#" appPreventDefault class="btn" (click)="pasteStep()"><i class="fa fa-paste"></i></a>
 </section>
@@ -50,6 +47,6 @@
 
 <footer>
   <div>
-    version 0.0.1 | built for <i class="fa fa-chrome" aria-hidden="true"></i>
+    version 0.0.2 | built for <i class="fa fa-chrome" aria-hidden="true"></i>
   </div>
 </footer>
